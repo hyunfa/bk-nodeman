@@ -24,6 +24,7 @@ import { IAuthApply, IBkBiz } from '@/types/index';
 import BkPaasLogin from '@blueking/paas-login/dist/paas-login.umd';
 import NoticeComponent from '@blueking/notice-component-vue2';
 import '@blueking/notice-component-vue2/dist/style.css';
+import { showLoginModal } from '@blueking/login-modal';
 
 @Component({
   name: 'app',
@@ -98,7 +99,9 @@ export default class App extends Vue {
     bus.$on('show-login-modal', () => {
       const { href, protocol } = window.location;
       if (process.env.NODE_ENV === 'development') {
-        window.location.href = LOGIN_DEV_URL + href;
+        const loginUrl = LOGIN_DEV_URL + href;
+        // 使用登录弹框登录
+        showLoginModal({ loginUrl });
       } else {
         // 目前仅ieod取消登录弹框
         // if (window.PROJECT_CONFIG.RUN_VER === 'ieod') {
@@ -109,7 +112,9 @@ export default class App extends Vue {
         if (!loginUrl.includes('?')) {
           loginUrl += '?';
         }
-        window.location.href = `${loginUrl}&c_url=${encodeURIComponent(href)}`;
+        loginUrl = `${loginUrl}&c_url=${encodeURIComponent(href)}`;
+        // 使用登录弹框登录
+        showLoginModal({ loginUrl });
         // } else {
         //   const res = data?.data || {};
         //   if (res.has_plain) {
