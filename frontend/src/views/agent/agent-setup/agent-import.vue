@@ -419,6 +419,11 @@ export default class AgentImport extends Mixins(mixin) {
         if (item.install_channel_id === 'default') {
           item.install_channel_id = null;
         }
+        // 手动安装时 也传账号和认证方式
+        if (this.isManual) {
+          item.account = item.os_type === 'WINDOWS' ? 'Administrator' : 'root';
+          item.auth_type = 'PASSWORD';
+        }
         const authType = item.auth_type?.toLowerCase() as ('key' | 'password');
         if (item[authType]) {
           item[authType] = this.$safety.encrypt(item[authType] as string);
