@@ -223,7 +223,7 @@
         </div>
       </bk-collapse>
 
-      <section v-if="!loading" :class="['footer', { 'fixed': isScroll }]">
+      <section v-if="!loading" :class="['footer']">
         <div class="footer-content">
           <bk-button v-test.common="'stepNext'" theme="primary" class="nodeman-primary-btn" @click="handleNextStep">
             {{ $t('下一步') }}
@@ -856,21 +856,12 @@ export default class ParamsConfig extends Vue {
   overflow: hidden;
   .scroll-content {
     height: 100%;
-    padding-bottom: 24px;
     overflow: auto;
   }
   &.has-scroll {
     .scroll-content {
-      padding-bottom: 36px;
     }
-    .footer {
-      position: absolute;
-      right: 0;
-      bottom: 0;
-      width: 100%;
-      border-top: 1px solid #dcdee5;
-      background: #fff;
-    }
+    
   }
   &-content {
     position: relative;
@@ -878,6 +869,9 @@ export default class ParamsConfig extends Vue {
     width: 730px;
   }
   .footer {
+    position: sticky;
+    bottom: 0;
+    background-color: #fff;
     .footer-content {
       padding: 10px 0 10px 24px;
       width: 705px;
