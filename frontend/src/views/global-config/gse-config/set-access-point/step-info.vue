@@ -43,7 +43,14 @@
           </i>
         </div>
       </bk-form-item>
-
+      <bk-form-item
+        :label="$t('启用sudo')"
+        :property="'isUseSudo'"
+        ext-cls="top-line"
+        :desc="{ content: $t('非系统管理员启用sudo执行安装命令'), placements: ['top'] }"
+      >
+        <bk-checkbox v-model="formData.isUseSudo"></bk-checkbox>
+      </bk-form-item>
       <bk-form-item class="mt30 item-button-group">
         <bk-button
           class="nodeman-primary-btn"
@@ -88,6 +95,7 @@ export default class StepInfo extends Vue {
   private pathSet = apAgentInfo;
   private rules = apAgentInfoRules;
   private formData: Dictionary = {
+    isUseSudo: false,
     linuxDataipc: '/var/run/ipc.state.report',
     linuxHostidPath: '/var/lib/gse/host/hostid',
     linuxSetupPath: '/usr/local/gse',
@@ -163,6 +171,7 @@ export default class StepInfo extends Vue {
       // detail里边多余的字段不能传入，否则通不过后端校验
       const formatData: IApParams = {
         name,
+        is_use_sudo: this.formData.isUseSudo,
         zk_account,
         zk_password,
         region_id,
@@ -251,6 +260,11 @@ export default class StepInfo extends Vue {
 .access-point-info {
   >>> form {
     width: 740px;
+  }
+  .top-line {
+    border-top: 1px solid #dcdee5;
+    padding-top: 20px;
+    margin-bottom: 40px;
   }
   .block-title {
     margin: 30px 0 20px 0;
